@@ -45,4 +45,8 @@ public class AssetsService {
     public Iterable<Asset> getByType(String type) {
         return repository.findByType(type);
     }
+
+    public Asset register(Asset asset) {
+        return repository.save(asset);
+    }
 }
