@@ -43,7 +43,7 @@ public class AssetsService {
         return repository.findById(id);
     }
 
-    public Iterable<Asset> getByType(String type) {
+    public List<Asset> getByType(String type) {
         return repository.findByType(type);
     }
 
@@ -80,7 +80,7 @@ public class AssetsService {
             repository.deleteById(id);
             return "Asset deleted!";
         }
-        
+
         return "Asset not registered!";
     }
 }
