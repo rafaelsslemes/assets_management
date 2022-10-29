@@ -40,8 +40,24 @@ public class AssetsController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Asset> getById(@PathVariable("id") Long id) {
-        return service.getById(id);
+    public ResponseEntity<Asset> getById(@PathVariable("id") Long id) {
+        Optional<Asset> optional = service.getById(id);
+
+        //// Traditional If Syntax
+        // if(optional.isPresent()){
+        //     return ResponseEntity.ok(optional.get());
+        // }
+        // return ResponseEntity.notFound().build();
+
+        //// Ternary If Syntax
+        // return optional.isPresent() ?
+        //     ResponseEntity.ok(optional.get()) :
+        //     ResponseEntity.notFound().build();
+
+        //// Lambda Syntax
+        return optional.map(
+            asset -> ResponseEntity.ok(asset))
+            .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/type/{type}")
