@@ -66,9 +66,21 @@ public class AssetsService {
 
             return repository.save(assetRegistered);
         
-        }else{
-            throw new RuntimeException("Invalid operation. Asset not registered!");
         }
         
+        throw new RuntimeException("Invalid operation. Asset not registered!");
+    }
+
+    public String delete(Long id) {
+        Assert.notNull(id, "Invalid operation. None id received!");
+
+        Optional<Asset> optional = repository.findById(id);
+
+        if(optional.isPresent()){
+            repository.deleteById(id);
+            return "Asset deleted!";
+        }
+        
+        return "Asset not registered!";
     }
 }
