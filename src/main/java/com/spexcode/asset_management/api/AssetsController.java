@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,8 +44,15 @@ public class AssetsController {
     @PostMapping("/register/")
     public String registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
-
         return "Asset Registered! ID=" + asset.getId();
+        
+    }
+
+
+    @PutMapping("/update/{id}")
+    public String updateAsset(@PathVariable("id") Long id, @RequestBody Asset asset) {
+        asset = service.update(asset);
+        return "Asset Updated! ID=" + asset.getId();
         
     }
     

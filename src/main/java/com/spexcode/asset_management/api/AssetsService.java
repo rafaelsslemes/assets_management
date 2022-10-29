@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.AssetsRepository;
@@ -48,5 +49,26 @@ public class AssetsService {
 
     public Asset register(Asset asset) {
         return repository.save(asset);
+    }
+
+    public Asset update(Asset asset) {
+        Assert.notNull(asset.getId(), "Invalid operation. Asset not registered!");
+        
+        // It works, but could cause relashionship problems 
+        // return repository.save(asset);
+
+        Optional<Asset> optional = repository.findById(asset.getId());
+
+        if(optional.isPresent()){
+            Asset assetRegistered = optional.get();
+            assetRegistered.setDescription(asset.getDescription());
+            assetRegistered.setType(asset.getType());
+
+            return repository.save(assetRegistered);
+        
+        }else{
+            throw new RuntimeException("Invalid operation. Asset not registered!");
+        }
+        
     }
 }
