@@ -60,6 +60,11 @@ public class AssetsService {
         return repository.findById(id);
     }
 
+    public Optional<AssetDTO> getDTOById(Long id) {
+            return repository.findById(id).map(AssetDTO::new);
+    }
+    
+
     public List<Asset> getByType(String type) {
         return repository.findByType(type);
     }

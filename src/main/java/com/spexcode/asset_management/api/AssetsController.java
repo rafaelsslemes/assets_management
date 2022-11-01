@@ -65,6 +65,15 @@ public class AssetsController {
             .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/dto/{id}")
+    public ResponseEntity<AssetDTO> getDTOById(@PathVariable("id") Long id) {
+        Optional<AssetDTO> optional = service.getDTOById(id);
+
+        return optional.map(
+            asset -> ResponseEntity.ok(asset))
+            .orElse(ResponseEntity.notFound().build());
+    }
+
     @GetMapping("/type/{type}")
     public ResponseEntity<List<Asset>> getByType(@PathVariable("type") String type){
 
