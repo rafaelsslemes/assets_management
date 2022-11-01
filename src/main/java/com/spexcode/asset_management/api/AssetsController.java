@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spexcode.asset_management.model.Asset;
+import com.spexcode.asset_management.model.dto.AssetDTO;
 
 @RestController
 @RequestMapping("/assets/v1/items")
@@ -26,6 +27,11 @@ public class AssetsController {
     @GetMapping("/static")
     public List<Asset> get() {
         return service.getItems();
+    }
+
+    @GetMapping("/dto")
+    public List<AssetDTO> getDTO() {
+        return service.getAllDTO();
     }
 
     @GetMapping
@@ -65,6 +71,16 @@ public class AssetsController {
         List<Asset> assets = service.getByType(type);
 
         
+        return assets.isEmpty() ? 
+            ResponseEntity.notFound().build() :
+            ResponseEntity.ok(assets); 
+    }
+
+    @GetMapping("/typeDTO/{type}")
+    public ResponseEntity<List<AssetDTO>> getByTypeDTO(@PathVariable("type") String type){
+
+        List<AssetDTO> assets = service.getByTypeDTO(type);
+
         return assets.isEmpty() ? 
             ResponseEntity.notFound().build() :
             ResponseEntity.ok(assets); 

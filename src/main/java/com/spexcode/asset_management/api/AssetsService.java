@@ -3,6 +3,7 @@ package com.spexcode.asset_management.api;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import org.springframework.util.Assert;
 
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.AssetsRepository;
+import com.spexcode.asset_management.model.dto.AssetDTO;
 
 @Service
 public class AssetsService {
@@ -35,8 +37,23 @@ public class AssetsService {
         
     }
 
-    public Iterable<Asset> getAll() {
+    public List<Asset> getAll() {
         return repository.findAll();
+    }
+
+    public List<AssetDTO> getAllDTO() {
+
+        // Using lambdas
+        return repository.findAll().stream().map(asset -> new AssetDTO(asset)).collect(Collectors.toList());
+
+        //// Using lists and for
+        // List<Asset> assets = repository.findAll();
+        // List<AssetDTO> DTOList = new ArrayList<>();
+
+        // for(Asset asset : assets){
+        //     DTOList.add(new AssetDTO(asset));
+        // }
+        // return DTOList;
     }
 
     public Optional<Asset> getById(Long id) {
@@ -45,6 +62,10 @@ public class AssetsService {
 
     public List<Asset> getByType(String type) {
         return repository.findByType(type);
+    }
+
+    public List<AssetDTO> getByTypeDTO(String type) {
+        return repository.findByType(type).stream().map(asset -> new AssetDTO(asset)).collect(Collectors.toList());
     }
 
     public Asset register(Asset asset) {
