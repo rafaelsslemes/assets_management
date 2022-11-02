@@ -4,11 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Asset {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "asset_sequence")
+    @SequenceGenerator(name="asset_sequence", sequenceName="asset_seq")
     private Long id;
 
     // Se o nome da coluna for diferente do campo
