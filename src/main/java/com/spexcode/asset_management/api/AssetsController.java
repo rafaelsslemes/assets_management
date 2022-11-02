@@ -101,9 +101,9 @@ public class AssetsController {
     public ResponseEntity<AssetDTO> registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
 
-        try{
+        try {
             return ResponseEntity.created(getURI(asset.getId())).build();
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             return ResponseEntity.badRequest().build();
         }
         
@@ -119,11 +119,17 @@ public class AssetsController {
     }
 
     // Same path of GetById but the request type must be PUT
-    @PutMapping("/{id}")
-    public String updateAsset(@PathVariable("id") Long id, @RequestBody Asset asset) {
-        asset = service.update(asset);
-        return "Asset Updated! ID=" + asset.getId();
-        
+    @PutMapping("/")
+    public ResponseEntity<AssetDTO> updateAsset(@RequestBody Asset asset) {
+       
+        try {
+            AssetDTO assetDTO = service.update(asset);
+            return ResponseEntity.ok(assetDTO);
+
+        } catch (RuntimeException ex){
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     // Same path of GetById but the request type must be DELETE

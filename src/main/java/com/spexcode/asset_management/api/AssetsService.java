@@ -77,7 +77,7 @@ public class AssetsService {
         return repository.save(asset);
     }
 
-    public Asset update(Asset asset) {
+    public AssetDTO update(Asset asset) {
         Assert.notNull(asset.getId(), "Invalid operation. Asset not registered!");
         
         // It works, but could cause relashionship problems 
@@ -90,8 +90,8 @@ public class AssetsService {
             assetRegistered.setDescription(asset.getDescription());
             assetRegistered.setType(asset.getType());
 
-            return repository.save(assetRegistered);
-        
+            assetRegistered = repository.save(assetRegistered);
+            return AssetDTO.createDTO(assetRegistered);
         }
         
         throw new RuntimeException("Invalid operation. Asset not registered!");
