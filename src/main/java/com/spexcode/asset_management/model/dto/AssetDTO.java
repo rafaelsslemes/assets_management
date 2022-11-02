@@ -1,5 +1,7 @@
 package com.spexcode.asset_management.model.dto;
 
+import org.modelmapper.ModelMapper;
+
 import com.spexcode.asset_management.model.Asset;
 
 // A summary structure that represents a class
@@ -8,9 +10,8 @@ public class AssetDTO {
     private Long id;
     private String description;
 
-    public AssetDTO(Asset asset) {
-        this.id = asset.getId();
-        this.description = asset.getDescription();
+    public static AssetDTO createDTO(Asset asset) {
+        return new ModelMapper().map(asset, AssetDTO.class);
     }
     
     public Long getId() {

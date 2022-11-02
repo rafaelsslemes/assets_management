@@ -44,7 +44,7 @@ public class AssetsService {
     public List<AssetDTO> getAllDTO() {
 
         // Using lambdas
-        return repository.findAll().stream().map(asset -> new AssetDTO(asset)).collect(Collectors.toList());
+        return repository.findAll().stream().map(AssetDTO::createDTO).collect(Collectors.toList());
 
         //// Using lists and for
         // List<Asset> assets = repository.findAll();
@@ -61,7 +61,7 @@ public class AssetsService {
     }
 
     public Optional<AssetDTO> getDTOById(Long id) {
-            return repository.findById(id).map(AssetDTO::new);
+            return repository.findById(id).map(AssetDTO::createDTO);
     }
     
 
@@ -70,7 +70,7 @@ public class AssetsService {
     }
 
     public List<AssetDTO> getByTypeDTO(String type) {
-        return repository.findByType(type).stream().map(asset -> new AssetDTO(asset)).collect(Collectors.toList());
+        return repository.findByType(type).stream().map(AssetDTO::createDTO).collect(Collectors.toList());
     }
 
     public Asset register(Asset asset) {
