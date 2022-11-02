@@ -54,6 +54,7 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok
+		Autogenerate BoilerPlates by annotations
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -62,11 +63,22 @@
 		</dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
+		<!-- Simple Convert an object to DTO -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+		<!-- Database in memory to Tests -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>2.1.214</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 
