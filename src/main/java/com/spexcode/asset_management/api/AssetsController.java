@@ -1,5 +1,6 @@
 package com.spexcode.asset_management.api;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.dto.AssetDTO;
@@ -96,10 +98,24 @@ public class AssetsController {
     }
 
     @PostMapping("/register/")
-    public String registerAsset(@RequestBody Asset asset) {
+    public ResponseEntity<AssetDTO> registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
-        return "Asset Registered! ID=" + asset.getId();
+
+        try{
+            return ResponseEntity.created(getURI(asset.getId())).build();
+        }catch (Exception ex) {
+            return ResponseEntity.badRequest().build();
+        }
         
+    }
+
+    /**
+     * Returns he URI to access the registered resource by id
+     * @param id the database id from a registered resource
+     * @return the URI to access the registered resource
+     */
+    public static URI getURI(Long id) {
+        return ServletUriComponentsBuilder.fromCurrentServletMapping().path("/assets/v1/items/{id}").buildAndExpand(id).toUri();
     }
 
     // Same path of GetById but the request type must be PUT
