@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.spexcode.asset_management.api.AssetsService;
 import com.spexcode.asset_management.model.Asset;
+import com.spexcode.asset_management.model.dto.AssetDTO;
 
 @SpringBootTest
 class AssetManagementApplicationTests {
@@ -57,6 +59,16 @@ class AssetManagementApplicationTests {
 		
 		assertEquals(registered.getId(), fromDB.get().getId());
 		assertNotEquals(description, fromDB.get().getDescription());
+	}
+
+	@Test
+	void listAssets() {
+		for (int i = 0; i < 30; i++) {
+			service.register(baseAsset());
+		}
+
+		List<AssetDTO> assets = service.getAllDTO();
+		assertEquals(assets.size(), 30);
 	}
 
 	private Asset baseAsset() {
