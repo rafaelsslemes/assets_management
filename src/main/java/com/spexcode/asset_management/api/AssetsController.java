@@ -100,7 +100,7 @@ public class AssetsController {
             ResponseEntity.ok(assets); 
     }
 
-    @PostMapping("/register/")
+    @PostMapping("/register")
     public ResponseEntity<AssetDTO> registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
 

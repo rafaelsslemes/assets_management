@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
+import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -125,6 +126,24 @@ protected TestRestTemplate rest;
 		AssetDTO asset = response.getBody();
 		assertNull(asset);
 	}
+
+	@Test
+	void registerAPI(){
+		Asset asset = baseAsset();
+
+		ResponseEntity<String> response = rest.postForEntity("/assets/v1/items/register", asset, String.class);
+		assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+		URI uriCreated = response.getHeaders().getLocation();
+		assertNotNull(uriCreated);
+		String urlCreated = uriCreated.toString();
+
+		ResponseEntity<AssetDTO> responseCreated = getItem(urlCreated);
+		AssetDTO assetCreated = responseCreated.getBody();
+		assertNotNull(assetCreated);
+		assertEquals(asset.getDescription(), assetCreated.getDescription());
+	}
+
 
 	private Asset baseAsset() {
 		Asset asset = new Asset();
