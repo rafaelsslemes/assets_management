@@ -12,13 +12,16 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
 import com.spexcode.asset_management.api.AssetsService;
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.dto.AssetDTO;
 
 @SpringBootTest
-class AssetManagementApplicationTests {
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+class AssetServiceTests {
 	
 	@Autowired
 	AssetsService service;
@@ -63,12 +66,12 @@ class AssetManagementApplicationTests {
 
 	@Test
 	void listAssets() {
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < 5; i++) {
 			service.register(baseAsset());
 		}
 
 		List<AssetDTO> assets = service.getAllDTO();
-		assertEquals(assets.size(), 30);
+		assertEquals(assets.size(), 5);
 	}
 
 	private Asset baseAsset() {

@@ -32,8 +32,12 @@ public class AssetsController {
     }
 
     @GetMapping("/dto")
-    public List<AssetDTO> getDTO() {
-        return service.getAllDTO();
+    public ResponseEntity<List<AssetDTO>> getDTO() {
+        List<AssetDTO> assets = service.getAllDTO();
+
+        return assets.isEmpty() ? 
+            ResponseEntity.noContent().build() :
+            ResponseEntity.ok(assets); 
     }
 
     @GetMapping
@@ -81,9 +85,8 @@ public class AssetsController {
 
         List<Asset> assets = service.getByType(type);
 
-        
         return assets.isEmpty() ? 
-            ResponseEntity.notFound().build() :
+            ResponseEntity.noContent().build() :
             ResponseEntity.ok(assets); 
     }
 
