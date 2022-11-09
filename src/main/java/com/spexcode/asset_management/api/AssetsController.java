@@ -137,12 +137,9 @@ public class AssetsController {
 
     // Same path of GetById but the request type must be DELETE
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id) {
-        boolean deleted = service.delete(id);
-    
-        return deleted? 
-            ResponseEntity.ok().build():
-            ResponseEntity.notFound().build();
+    public ResponseEntity<String> deleteById(@PathVariable("id") Long id) {
+        service.delete(id);
+        return ResponseEntity.ok().build();
     }
     
 }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -97,15 +98,11 @@ public class AssetsService {
         throw new RuntimeException("Invalid operation. Asset not registered!");
     }
 
-    public boolean delete(Long id) {
+    public ResponseEntity<String> delete(Long id) {
+        
         Assert.notNull(id, "Invalid operation. None id received!");
-
-        Optional<Asset> optional = repository.findById(id);
-
-        if(optional.isPresent()){
-            repository.deleteById(id);
-            return true;
-        }
-        return false;
+        repository.deleteById(id);
+        
+        return ResponseEntity.ok().build();
     }
 }
