@@ -103,13 +103,7 @@ public class AssetsController {
     @PostMapping("/register")
     public ResponseEntity<AssetDTO> registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
-
-        try {
-            return ResponseEntity.created(getURI(asset.getId())).build();
-        } catch (Exception ex) {
-            return ResponseEntity.badRequest().build();
-        }
-        
+        return ResponseEntity.created(getURI(asset.getId())).build();
     }
 
     /**

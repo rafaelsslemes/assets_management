@@ -75,6 +75,7 @@ public class AssetsService {
     }
 
     public Asset register(Asset asset) {
+        Assert.isNull(asset.getId(), "`Id` must not be set");
         return repository.save(asset);
     }
 
