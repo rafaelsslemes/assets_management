@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import com.spexcode.asset_management.api.exception.EntityNotFoundException;
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.AssetsRepository;
 import com.spexcode.asset_management.model.dto.AssetDTO;
@@ -61,8 +62,8 @@ public class AssetsService {
         return repository.findById(id);
     }
 
-    public Optional<AssetDTO> getDTOById(Long id) {
-            return repository.findById(id).map(AssetDTO::createDTO);
+    public AssetDTO getDTOById(Long id) throws EntityNotFoundException {
+        return repository.findById(id).map(AssetDTO::createDTO).orElseThrow(()-> new EntityNotFoundException());
     }
     
 

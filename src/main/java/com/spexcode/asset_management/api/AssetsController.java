@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.spexcode.asset_management.api.exception.EntityNotFoundException;
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.dto.AssetDTO;
 
@@ -72,12 +73,9 @@ public class AssetsController {
     }
 
     @GetMapping("/dto/{id}")
-    public ResponseEntity<AssetDTO> getDTOById(@PathVariable("id") Long id) {
-        Optional<AssetDTO> optional = service.getDTOById(id);
-
-        return optional.map(
-            asset -> ResponseEntity.ok(asset))
-            .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<AssetDTO> getDTOById(@PathVariable("id") Long id) throws EntityNotFoundException {
+        AssetDTO assetDTO = service.getDTOById(id);
+        return ResponseEntity.ok(assetDTO);
     }
 
     @GetMapping("/type/{type}")
