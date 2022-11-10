@@ -27,6 +27,8 @@ public class ExceptionHandlers extends ResponseEntityExceptionHandler{
         return ResponseEntity.badRequest().build();
     }
 
+    // Override method to hide StackTrace
+    @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(
 			HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
 
