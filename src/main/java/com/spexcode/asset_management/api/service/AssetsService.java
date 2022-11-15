@@ -1,4 +1,4 @@
-package com.spexcode.asset_management.api;
+package com.spexcode.asset_management.api.service;
 
 import java.util.ArrayList;
 import java.util.List;

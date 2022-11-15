@@ -18,7 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
-import com.spexcode.asset_management.api.AssetsService;
+import com.spexcode.asset_management.api.service.AssetsService;
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.dto.AssetDTO;
 

@@ -1,4 +1,4 @@
-package com.spexcode.asset_management.api;
+package com.spexcode.asset_management.api.controller;
 
 import java.net.URI;
 import java.util.List;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.spexcode.asset_management.api.exception.EntityNotFoundException;
+import com.spexcode.asset_management.api.service.AssetsService;
 import com.spexcode.asset_management.model.Asset;
 import com.spexcode.asset_management.model.dto.AssetDTO;
 
