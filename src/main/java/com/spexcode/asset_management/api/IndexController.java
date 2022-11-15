@@ -1,5 +1,7 @@
 package com.spexcode.asset_management.api;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @GetMapping
-    public String get() {
-        return "Get!";
+    public String get(@AuthenticationPrincipal UserDetails loggedUser) {
+        return "Get Success! Welcome " + loggedUser.getUsername();
     }
 
     @PostMapping
