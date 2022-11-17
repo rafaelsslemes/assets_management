@@ -101,7 +101,7 @@ public class AssetsController {
     }
 
     @PostMapping("/register")
-    @Secured({"ROLE_ADMIN"})
+    @Secured({"ROLE_ADMIN"}) // This must be the exact name of role 
     public ResponseEntity<AssetDTO> registerAsset(@RequestBody Asset asset) {
         asset = service.register(asset);
         return ResponseEntity.created(getURI(asset.getId())).build();
