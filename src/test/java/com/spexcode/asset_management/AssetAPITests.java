@@ -30,11 +30,11 @@ class AssetAPITests {
 protected TestRestTemplate rest;
 
 	private ResponseEntity<AssetDTO> getItem(String url) {
-		return rest.getForEntity(url, AssetDTO.class);
+		return rest.withBasicAuth("api_user", "123456").getForEntity(url, AssetDTO.class);
 	}
 
 	private ResponseEntity<List<AssetDTO>> getList(String url){
-		return rest.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<AssetDTO>>(){});
+		return rest.withBasicAuth("api_user", "123456").exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<List<AssetDTO>>(){});
 	}
 
 	@Autowired
@@ -42,32 +42,32 @@ protected TestRestTemplate rest;
 
 	@Test
 	void listAssetsAPI() {
-		for (int i = 0; i < 5; i++) {
-			service.register(baseAsset());
-		}
+		// for (int i = 0; i < 10; i++) {
+		// 	service.register(baseAsset());
+		// }
 
 		ResponseEntity<List<AssetDTO>> response = getList("/assets/v1/items/dto");
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 
 		List<AssetDTO> assets = response.getBody();
 		assertNotNull(assets);
-		assertEquals(5, assets.size());
+		assertEquals(10, assets.size());
 	}
 
 	@Test
 	void getByTypeAPI() {
 		
-		for (int i = 0; i < 5; i++) {
-			Asset base = baseAsset();
-			base.setType("type1");
-			service.register(base);
-		}
+		// for (int i = 0; i < 5; i++) {
+		// 	Asset base = baseAsset();
+		// 	base.setType("type1");
+		// 	service.register(base);
+		// }
 
-		for (int i = 0; i < 3; i++) {
-			Asset base = baseAsset();
-			base.setType("type2");
-			service.register(base);
-		}
+		// for (int i = 0; i < 5; i++) {
+		// 	Asset base = baseAsset();
+		// 	base.setType("type2");
+		// 	service.register(base);
+		// }
 
 		ResponseEntity<List<AssetDTO>> responseType1 = getList("/assets/v1/items/type/type1");
 		assertEquals(HttpStatus.OK, responseType1.getStatusCode());
@@ -81,7 +81,7 @@ protected TestRestTemplate rest;
 
 		assets = responseType2.getBody();
 		assertNotNull(assets);
-		assertEquals(3, assets.size());
+		assertEquals(5, assets.size());
 	}
 
 	@Test
@@ -96,11 +96,15 @@ protected TestRestTemplate rest;
 
 	@Test
 	void listAPINoneAsset() {
+		List<Asset> registeredAssets = service.getAll();
+		for(Asset asset : registeredAssets){
+			service.delete(asset.getId());
+		}
 
 		ResponseEntity<List<AssetDTO>> response = getList("/assets/v1/items/dto");
 		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 
-		List<AssetDTO> assets = response.getBody();
+		List<AssetDTO>  assets = response.getBody();
 		assertNull(assets);
 	}
 
@@ -131,7 +135,7 @@ protected TestRestTemplate rest;
 	void registerAPI(){
 		Asset asset = baseAsset();
 
-		ResponseEntity<String> response = rest.postForEntity("/assets/v1/items/register", asset, String.class);
+		ResponseEntity<String> response = rest.withBasicAuth("api_admin", "123456").postForEntity("/assets/v1/items/register", asset, String.class);
 		assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
 		URI uriCreated = response.getHeaders().getLocation();

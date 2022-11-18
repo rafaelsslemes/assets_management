@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Entity
-@Table(name = "\"user\"")  // Necessary to use tablename 'user'
+@Table(name = "api_user")  // Necessary to use tablename 'user'
 public class User implements UserDetails{
     
     @Id
